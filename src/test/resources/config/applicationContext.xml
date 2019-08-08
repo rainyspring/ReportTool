@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+	        http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+			http://www.springframework.org/schema/context 
+			http://www.springframework.org/schema/context/spring-context-3.2.xsd
+			http://www.springframework.org/schema/aop
+			http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+			http://www.springframework.org/schema/mvc
+			http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+	<!-- 拦截器，处理session过期后的跳转 -->
+	<!--  
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/**/login.do"/>
+			<mvc:exclude-mapping path="/**/sysLogin.do"/>
+			<mvc:exclude-mapping path="/**/sysIndex.do"/>
+			<mvc:exclude-mapping path="/**/index.do"/>
+			<mvc:exclude-mapping path="/**/getIdentifyingCode.do"/>
+			
+		    <mvc:exclude-mapping path="/favicon.ico"/>
+		 	<mvc:exclude-mapping path="/js/**"/>
+            <mvc:exclude-mapping path="/css/**"/>
+            <mvc:exclude-mapping path="/images/**"/>
+			<bean class="com.fulong.pipewelding.interceptor.AccessInterceptor">
+			</bean>
+		</mvc:interceptor>
+		
+	</mvc:interceptors>
+	-->
+
+	<!-- ViewResolver -->
+	<bean id="internalResourceViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/"/>
+		<property name="suffix" value=".jsp" /> 
+		<!-- <property name="contentType" value="text/html;charset=UTF-8" />  -->
+		<!-- 设置解析器的优先级 InternalResourceViewResolver必须总是赋予最低的优先级（最大的order值）， 因为不管返回什么视图名称，它都将解析视图。如果它的优先级高于其它解析器的优先级的话， 
+			它将使得其它具有较低优先级的解析器没有机会解析视图 -->
+		<property name="order" value="10" />
+	</bean>
+	<!--Freemarker视图解释器 -->
+	<bean id="freemarkerViewResolver"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="suffix">
+			<value>.ftl</value>
+		</property>
+		<property name="contentType" value="text/html;charset=UTF-8"></property>
+		<!-- 设置解析器的优先级 -->
+		<property name="order" value="1" />
+	</bean>
+
+    <!-- SpringMVC 使用@ResponseBody返回json 中文乱码 -->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/plain;charset=UTF-8</value>
+                        <value>application/json;charset=UTF-8</value>
+                        <value>text/html;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    
+
+	<!-- SpringMVC上传文件时,需配置MultipartResolver处理器 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 指定所上传文件的总大小不能超过800KB......注意maxUploadSize属性的限制不是针对单个文件,而是所有文件的容量之和 -->
+		<property name="maxUploadSize" value="-1" />
+		<property name="defaultEncoding" value="UTF-8"></property>
+	</bean>
+
+</beans>
