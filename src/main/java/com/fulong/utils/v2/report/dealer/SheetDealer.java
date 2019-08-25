@@ -1,6 +1,7 @@
 package com.fulong.utils.v2.report.dealer;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -24,6 +25,8 @@ import com.fulong.utils.v2.report.tool.RegexUtil;
  * @date 2017年5月7日 上午9:42:54
  */
 public class SheetDealer {
+	
+	
 	/**
 	 * sheet页签序号（从0开始）
 	 */
@@ -67,7 +70,7 @@ public class SheetDealer {
 
 		}
 
-		// 为sheet页签命名
+		// 为sheet页签命名,默认123456...
 		POIUtil.renameSheet(modelsheetOfMine, String.valueOf(this.indexSheet+1));
 
 		// 替换UI参数、替换分页参数（变成常量），将组替换符和排序替换符变为空
@@ -159,19 +162,12 @@ public class SheetDealer {
 	 * @date 2017年5月4日 上午9:07:47
 	 */
 	public static class BlankSheet {
-		private String msg;
-		private Sheet sheet;
-
-		public BlankSheet(String msg, Sheet sheet) {
-			this.msg = msg == null ? "" : msg;
-			this.sheet = sheet;
-			this.makeAllCellsBlank();
-		}
+		
 
 		/**
 		 * 使sheet内部所有的单元格的值，将带有替换符的都变为空
 		 */
-		private void makeAllCellsBlank() {
+		public static Sheet makeAllCellsBlank(String msg, Sheet sheet) {
 			int rowNum = sheet.getLastRowNum();
 			for (int i = 0; i < rowNum; i++) {
 				Row r = POIUtil.getOrCreateRow(sheet, i);
@@ -182,14 +178,18 @@ public class SheetDealer {
 
 					String v = POIUtil.getCellValue(cell);
 
+					if (i == 0 && j == 0) {// 将错误信息显示在第一个单元格内,便于显示提醒用户为什么是白板
+						cell.setCellValue(msg);
+					}
+					
 					if (!StringUtils.isBlank(v) && v.matches(R.OBJECT_PROPERTY_REGEX)) {
 						cell.setCellValue("");
 					}
-					if (i == 0 && j == 0) {// 将错误信息显示在第一个单元格内
-						cell.setCellValue(msg);
-					}
+					
 				}
 			}
+			
+			return sheet;
 
 		}
 

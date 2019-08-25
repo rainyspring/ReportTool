@@ -63,7 +63,7 @@ public class ReportDealer {
 	/**
 	 * 模板文件
 	 */
-//	private File modelFile;
+	// private File modelFile;
 	/**
 	 * 这个贯穿全剧的公共参数 存储了每个模块都会使用的参数
 	 */
@@ -91,14 +91,15 @@ public class ReportDealer {
 	// private TreeMap<Integer,Set<CellRangeAddress>> ranges = new
 	// TreeMap<Integer, Set<CellRangeAddress>>();
 
-	/*public ReportDealer(Session session, File modelFile, Param param) throws Exception {
-		this.modelFile = modelFile;
-		this.param = param;
-		this.session = session;
-
-	}*/
+	/*
+	 * public ReportDealer(Session session, File modelFile, Param param) throws
+	 * Exception { this.modelFile = modelFile; this.param = param; this.session
+	 * = session;
+	 * 
+	 * }
+	 */
 	public ReportDealer(Session session, Param param) throws Exception {
-//		this.modelFile = modelFile;
+		// this.modelFile = modelFile;
 		this.param = param;
 		this.session = session;
 
@@ -148,7 +149,7 @@ public class ReportDealer {
 			/*
 			 * 如果没有模板了，要留个空白页
 			 */
-			if(sheets.isEmpty()) {
+			if (sheets.isEmpty()) {
 				this.workbook.createSheet("no data");
 			}
 			System.out.println("恭喜您!!");
@@ -158,8 +159,9 @@ public class ReportDealer {
 			String msg = DataHelper.filterValueBy(e.getMessage());
 			// 用空串替换所有的替换符，
 			// 并将错误信息显示在文件的第一个空白单元格中
-			new SheetDealer.BlankSheet(msg,
+			SheetDealer.BlankSheet.makeAllCellsBlank(msg,
 					POIUtil.renameSheet(this.workbook.cloneSheet(0), SheetDealer.DEFAULT_SHEET_NAME));
+			
 			e.printStackTrace();
 		} finally {
 			this.finishInServer();
@@ -291,11 +293,12 @@ public class ReportDealer {
 	 */
 	public static class ParamAnalyzer {
 		private final Param param;
-//		private final Session session;
+		// private final Session session;
 		/**
 		 * 存储分页属性的同胞属性
 		 */
-//		public final Set<String> pagingBrothersColumns = new HashSet<String>();
+		// public final Set<String> pagingBrothersColumns = new
+		// HashSet<String>();
 		/**
 		 * 简单的模板解析结构 内容：记录所有的层（层行号,层内值的集合），全部存储，先不区分是组还是单层(循环层或汇总层)
 		 */
@@ -316,7 +319,7 @@ public class ReportDealer {
 		public ParamAnalyzer(Param param) throws Exception {
 
 			this.param = param;
-//			this.session = session;
+			// this.session = session;
 			this.rangeParamAnalyzer = new RangeParam(this.param);
 			this.init();
 		}
@@ -428,7 +431,8 @@ public class ReportDealer {
 
 		/**
 		 * 对层集合进行格式化 内容：对filteredLayers进行统一的进一步处理， 为SheetDealer实际解析sql时提供方便
-		 * 1将组中的层重新封装:GroupLayer 2 将合并单元格涉及的层放在一起:MergingLayer 3 其他的层不变:LoopLayer
+		 * 1将组中的层重新封装:GroupLayer 2 将合并单元格涉及的层放在一起:MergingLayer 3
+		 * 其他的层不变:LoopLayer
 		 */
 		public ParamAnalyzer filterGroup4Layer() {
 			if (this.filteredLayers.size() <= 0) {
@@ -499,16 +503,19 @@ public class ReportDealer {
 			/**
 			 * 核心处理逻辑
 			 * 
-			 * @param mainValue   去掉范围后的真正实体串， 即{xxx}[1~9]-->{xxx}
-			 *                    或{xxx}(1~9)[3,9,8]-->{xxx}
-			 * @param pushMerging 小括号的部分,形如(0~9)或(2,9,8)
-			 * @param pushCoping  中括号的部分,形如[0~9]或[2,9,8]
+			 * @param mainValue
+			 *            去掉范围后的真正实体串， 即{xxx}[1~9]-->{xxx}
+			 *            或{xxx}(1~9)[3,9,8]-->{xxx}
+			 * @param pushMerging
+			 *            小括号的部分,形如(0~9)或(2,9,8)
+			 * @param pushCoping
+			 *            中括号的部分,形如[0~9]或[2,9,8]
 			 * @throws Exception
 			 */
 			public void work(Cell c) throws Exception {
 
-//				Sheet s = c.getSheet();
-//				Row r = c.getRow();
+				// Sheet s = c.getSheet();
+				// Row r = c.getRow();
 				// 获取值
 				String cellValue = POIUtil.getCellValue(c);
 
@@ -615,10 +622,12 @@ public class ReportDealer {
 		private String objectName = null;
 		// 分页DB视图
 		private String view4DB = null;
+		
+		private int pageIndex = 0;
 
 		public PagingAnalyzer(Param param) {
 			this.param = param;
-//			this.pagingBrothersColumns = pagingColumns;
+			// this.pagingBrothersColumns = pagingColumns;
 		}
 
 		/**
@@ -626,7 +635,7 @@ public class ReportDealer {
 		 * 
 		 * @param param
 		 * @param pagingBrothersColumns
-		 * @throws IOException 
+		 * @throws IOException
 		 */
 		public List<SheetDealer> page2Sheet(Session session) throws MyReportException, IOException {
 
@@ -634,7 +643,8 @@ public class ReportDealer {
 			 * 检测是否已经获取了模板sheet名称
 			 * 当sheetname_modelSheet不为空时，说明ui.complexPageColumn涂改了模板初始sheetname；
 			 * 原因：由于Excel的sheetName有字数限制，建议采用ui.complexPageColumn彻底涂改模板最初的默认值
-			 * 这个where部分是要拼凑在分页sql中的 sheetname_modelSheet形如：{w.a},{w.b}<{w.b} is null>
+			 * 这个where部分是要拼凑在分页sql中的 sheetname_modelSheet形如：{w.a},{w.b}<{w.b} is
+			 * null>
 			 */
 			if (StringUtils.isBlank(sheetname_modelSheet)) {
 
@@ -648,8 +658,8 @@ public class ReportDealer {
 			// -------解析sheetname------start--------------------------
 
 			/*
-			 * 实际存储分页属性 ，初始时给与默认值sheetname_modelSheet（形如{w.a},{w.b}<{w.b} is null>）
-			 * 故我们后面要去掉<>后面部分，且分页属性可能包含多个分页属性，逗号分隔
+			 * 实际存储分页属性 ，初始时给与默认值sheetname_modelSheet（形如{w.a},{w.b}<{w.b} is
+			 * null>） 故我们后面要去掉<>后面部分，且分页属性可能包含多个分页属性，逗号分隔
 			 */
 			String keys4Sheet = sheetname_modelSheet;
 
@@ -674,7 +684,8 @@ public class ReportDealer {
 				String pageColumn = array4Key[i];
 
 				// 放入分页属性集合中(这里将分页属性的形如{ne.code}->{sheet.code}的原因是避免后期存在重复的{sheet.code},属性重复会造成sql错误)
-				this.param.pagingColumnContainer.add(pageColumn.replaceAll(R.OBJECT_PROPERTY_REGEX_CONTENT_PREFIX, R.SHEET_REGEX_CONTENT_PREFIX_STRING));
+				this.param.pagingColumnContainer.add(pageColumn.replaceAll(R.OBJECT_PROPERTY_REGEX_CONTENT_PREFIX,
+						R.SHEET_REGEX_CONTENT_PREFIX_STRING));
 
 				// 存储分页时使用的对象
 				if (i == 0) {
@@ -688,13 +699,13 @@ public class ReportDealer {
 
 			// 找到对应的真实的数据库表名或视图（去属性文件里找到对应关系）
 			this.view4DB = LoopLayer.getRealViewName(this.objectName);
-			//this.view4DB = this.view4DB.contains(" ")?" ("+this.view4DB+") ":this.view4DB;
-			
+			// this.view4DB = this.view4DB.contains(" ")?" ("+this.view4DB+")
+			// ":this.view4DB;
+
 			// 获取分页数据
 			List<Object[]> dataList_paging = this.getPagingData(session, pagingSql4WherePiece);
 			if (dataList_paging == null || dataList_paging.size() <= 0) {// 没数据，那么没有分页；
-
-				return new ArrayList<SheetDealer>();
+				return getBlankSheet();
 			}
 
 			// 标记分页，这回真的确定要分页了
@@ -702,15 +713,12 @@ public class ReportDealer {
 
 			List<SheetDealer> sheetDealers = new ArrayList<SheetDealer>();
 
-			// 变成数组形式
-			// String[] arr_columns = this.pagingBrothersColumns.toArray(new
-			// String[this.pagingBrothersColumns.size()]);
 
-			List<String> pageColumns= this.param.pagingColumnContainer.getOrInitializeCachePigingColumns();
+			List<String> pageColumns = this.param.pagingColumnContainer.getOrInitializeCachePigingColumns();
 			int length = pageColumns.size();
 			// 获取每一页的数据集,每一页就是一个sheet
-			for (int j = 0; j < dataList_paging.size(); j++) {
-				Object[] dataByPage = dataList_paging.get(j);
+			for (; pageIndex < dataList_paging.size(); pageIndex++) {
+				Object[] dataByPage = dataList_paging.get(pageIndex);
 				/*
 				 * 存储每页（sheet）的分页属性和同胞属性的(key-value)值对
 				 */
@@ -723,7 +731,7 @@ public class ReportDealer {
 					pagingParamValues.put(columnName, columnValue);
 				}
 
-				//test
+				// test
 				for (Map.Entry<String, String> entry : pagingParamValues.entrySet()) {
 					System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
 				}
@@ -731,8 +739,8 @@ public class ReportDealer {
 				/*
 				 * 创建sheetDealer，并添加到集合中 注意：sheetDealer中的模板是主模板的克隆sheet
 				 */
-				sheetDealers.add(
-						new SheetDealer(j, ReportDealer.cloneSheet(this.param.mainSheet), pagingParamValues, this.param));
+				sheetDealers.add(new SheetDealer(pageIndex, ReportDealer.cloneSheet(this.param.mainSheet), pagingParamValues,
+						this.param));
 			}
 
 			return sheetDealers;
@@ -747,10 +755,25 @@ public class ReportDealer {
 			/*
 			 * 更加模板克隆一个新的模板作为数据填写的蓝本
 			 */
-			SheetDealer oneSheet = new SheetDealer(0, ReportDealer.cloneSheet(this.param.mainSheet), null, this.param);
+			SheetDealer oneSheet = new SheetDealer(pageIndex, ReportDealer.cloneSheet(this.param.mainSheet), null, this.param);
 			List<SheetDealer> olist = new ArrayList<SheetDealer>();
 			olist.add(oneSheet);
 			return olist;
+		}
+		
+		/**
+		 * 没有分页
+		 * 
+		 * @return 返回没有分页的Report的sheet集合
+		 */
+		private List<SheetDealer> getBlankSheet() {
+			ArrayList<SheetDealer> blankSheets = new ArrayList<SheetDealer>(1);
+			
+			Sheet sheet = ReportDealer.cloneSheet(this.param.mainSheet);
+			//插入空模板
+			Sheet blankSheet  = SheetDealer.BlankSheet.makeAllCellsBlank("(以下是空白行)", sheet);
+			blankSheets.add(new SheetDealer(pageIndex,blankSheet, null, this.param));
+			return blankSheets;
 		}
 
 		/**
@@ -765,12 +788,10 @@ public class ReportDealer {
 			/*
 			 * 将同胞属性集合拼凑成sql的select片段
 			 */
-			List<String> allPagingColumns = this.param.pagingColumnContainer
-								.getOrInitializeCachePigingColumns();
+			List<String> allPagingColumns = this.param.pagingColumnContainer.getOrInitializeCachePigingColumns();
 			String[] arr_columns = allPagingColumns.toArray(new String[allPagingColumns.size()]);
 			String partOfSql4names = StringUtils.join(arr_columns, ",");
 
-			
 			/*
 			 * 模板上的分页属性和UI参数匹配时的where部分
 			 */
@@ -792,16 +813,17 @@ public class ReportDealer {
 					this.param.uiParams.remove(pageColumn4UI);
 				}
 			}
-			
+
 			/*
-			 * 形如：select distinct a.A,a.B from view a group by a.A,a.B 第一个值默认为分页属性，后面的为同胞属性
-			 * 由于分页属性可能不是对象的主键，select后可能存在重复值， 而distinct无法对多个属性操作，故采用group by
+			 * 形如：select distinct a.A,a.B from view a group by a.A,a.B
+			 * 第一个值默认为分页属性，后面的为同胞属性 由于分页属性可能不是对象的主键，select后可能存在重复值，
+			 * 而distinct无法对多个属性操作，故采用group by
 			 * 
 			 * 之所以增加个冗余列xyz123，是为了hibernate的数据集大于1个， 这样就可以统一用List<Object[]>接收了
 			 * 
 			 */
-			StringBuffer sql = new StringBuffer(
-					"select distinct " + partOfSql4names + ",'' as xyz123  from " + this.view4DB + " " + this.objectName);
+			StringBuffer sql = new StringBuffer("select distinct " + partOfSql4names + ",'' as xyz123  from "
+					+ this.view4DB + " " + this.objectName);
 
 			/*
 			 * where部分
@@ -864,6 +886,7 @@ public class ReportDealer {
 
 		}
 
+		
 	}
 
 	/**
@@ -874,7 +897,7 @@ public class ReportDealer {
 	private void finishInServer() throws IOException {
 		this.outDir = (this.outDir == null ? PathUtil.getTempSavePath(null) : this.outDir);
 		Path path = this.outDir
-				.resolve(UUID.randomUUID().toString() + FileUtil.getSuffix(this.param.templet.getName(),true));
+				.resolve(UUID.randomUUID().toString() + FileUtil.getSuffix(this.param.templet.getName(), true));
 		this.outputFile = path.toFile();
 		FileOutputStream out = new FileOutputStream(this.outputFile);
 		workbook.write(out);
@@ -908,7 +931,8 @@ public class ReportDealer {
 	/**
 	 * 获取order By的sql属性
 	 * 
-	 * @param v :形如："orderBy({wl.jiang}+,{wl.xuxu}-)"
+	 * @param v
+	 *            :形如："orderBy({wl.jiang}+,{wl.xuxu}-)"
 	 * @return 形如：List<String> [{wl.jiang}+, {wl.xuxu}-]
 	 */
 	public static List<String> getColumnsRegex4OrderBySql(String v) {
@@ -961,9 +985,12 @@ public class ReportDealer {
 	/**
 	 * 在c位置右边新增length_newBlankCell个空白单元格，然后与c组成合并单元格 如果c已经是合并单元格，就将它扩展
 	 * 
-	 * @param c                   当前单元格
-	 * @param arr_RowIndex        是数字数组，里面存储行号，代表需要追加空白格且合并延伸的行
-	 * @param length_newBlankCell 新增的空白单元格
+	 * @param c
+	 *            当前单元格
+	 * @param arr_RowIndex
+	 *            是数字数组，里面存储行号，代表需要追加空白格且合并延伸的行
+	 * @param length_newBlankCell
+	 *            新增的空白单元格
 	 */
 	public static void putBlankCellAndMerge4Rows(Cell c, List<Integer> arr_RowIndex, int length_newBlankCell) {
 		if (c == null || arr_RowIndex == null || length_newBlankCell <= 0 || arr_RowIndex.size() <= 0) {
@@ -992,11 +1019,15 @@ public class ReportDealer {
 	 * 如果c是合并单元格，则可能c的colspan>1,即同列的不同行的单元格包含多个单元格
 	 * 故在平移复制时，要保证colspan内的单元格都平移复制，且对regex进行替换
 	 * 
-	 * @param c             ，其跨列代表平移范围
-	 * @param               arr_RowIndex行号数组，代表平移涉及的行
-	 * @param regex         替换正则
-	 * @param dynamicValues 值的数组，数组大小代表平移次数 横向的值的数组，每个值对应一个列,其中包含要通过Regex替换的值,
-	 * @param isValue4Sql   dynamicValues值是sql中的值，如果是加''
+	 * @param c
+	 *            ，其跨列代表平移范围
+	 * @param arr_RowIndex行号数组，代表平移涉及的行
+	 * @param regex
+	 *            替换正则
+	 * @param dynamicValues
+	 *            值的数组，数组大小代表平移次数 横向的值的数组，每个值对应一个列,其中包含要通过Regex替换的值,
+	 * @param isValue4Sql
+	 *            dynamicValues值是sql中的值，如果是加''
 	 */
 	public static void replaceDynamicValue4RowsByRegex(Cell c, List<Integer> arr_RowIndex, String regex,
 			List<? extends Object> dynamicValues, boolean isValue4Sql) {
@@ -1064,7 +1095,8 @@ public class ReportDealer {
 					// 先平移 必须从第一个单元格开始平移复制即可
 					POIUtil.insertAndCopyValue(first, 1, colStepByGroup);
 					/*
-					 * 每一次平移，步调为colStepByGroup，必须保证colStepByGroup 范围覆盖的每个一个单元格都是相同的数据
+					 * 每一次平移，步调为colStepByGroup，必须保证colStepByGroup
+					 * 范围覆盖的每个一个单元格都是相同的数据
 					 */
 					for (int j = 0; j < colStepByGroup; j++) {
 						// 总是去修改下一个位置的值

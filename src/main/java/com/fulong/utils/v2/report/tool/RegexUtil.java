@@ -72,7 +72,7 @@ public class RegexUtil {
 
 		return column;
 	}
-
+	
 	/**
 	 * 将column中脱去UI属性的外套,并将真实的常量填充 形如 count({sys.isoCode}) --> count(12345)
 	 * 如果替换符无法获取数据，默认是空值
@@ -129,29 +129,15 @@ public class RegexUtil {
 		return value;
 	}
 
-	@Deprecated
-	public static String takeOffPagingRegex_bak(String column, Map<String, String> pagingParams, boolean isPieceOfSql) {
-		if (pagingParams == null || pagingParams.size() <= 0) {
-			return column;
-		}
-
-		List<String> sheetParams = RegexUtil.getMatchedGroup4Regex(column, R.SHEET_REGEX);
-		if (sheetParams == null || sheetParams.size() <= 0) {
-			return column;
-		}
-		for (String key : sheetParams) {// 遍历每个参数
-			key = key.replace("{", "").replace("}", "");
-
-			String value = pagingParams.get(key.split("\\.")[1]);
-			value = value == null ? "" : value;
-			if (isPieceOfSql) {
-				value = "'" + value + "'";
-			}
-			column = column.replace("{" + key + "}", value);
-		}
-		return column;
+	/**
+	 * 将所有正则替换符 变为空
+	 * 暂时没啥用
+	 * @param column
+	 */
+	public static String takeOffAllRegex2Blank(String column){
+		return column.replaceAll(R.UI_PROPERTY_REGEX, "").replaceAll( R.OBJECT_PROPERTY_REGEX, "")
+		.replaceAll( R.SYS_PROPERTY_REGEX, "");
 	}
-
 	/**
 	 * 解析[10~12]或[10,19,1]或(10~19)或(10,18,1) 提取其中的整数值
 	 * 
