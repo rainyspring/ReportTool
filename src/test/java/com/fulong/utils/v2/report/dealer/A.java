@@ -43,6 +43,7 @@ public class A {
 		
 		File f = this.createReport(param);
 	
+		System.out.println();
 	}
 	
 	private File createReport(Param param) throws Exception {
