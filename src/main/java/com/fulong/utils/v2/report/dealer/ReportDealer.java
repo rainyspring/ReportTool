@@ -61,10 +61,6 @@ import net.sf.json.JSONObject;
 public class ReportDealer {
 
 	/**
-	 * 模板文件
-	 */
-	// private File modelFile;
-	/**
 	 * 这个贯穿全剧的公共参数 存储了每个模块都会使用的参数
 	 */
 	private final Param param;
@@ -85,21 +81,8 @@ public class ReportDealer {
 	 */
 	private String sheetname_modelSheet = null;
 
-	/**
-	 * 存储所有的合并单元格 (行号,合并单元格)
-	 */
-	// private TreeMap<Integer,Set<CellRangeAddress>> ranges = new
-	// TreeMap<Integer, Set<CellRangeAddress>>();
-
-	/*
-	 * public ReportDealer(Session session, File modelFile, Param param) throws
-	 * Exception { this.modelFile = modelFile; this.param = param; this.session
-	 * = session;
-	 * 
-	 * }
-	 */
+	
 	public ReportDealer(Session session, Param param) throws Exception {
-		// this.modelFile = modelFile;
 		this.param = param;
 		this.session = session;
 
