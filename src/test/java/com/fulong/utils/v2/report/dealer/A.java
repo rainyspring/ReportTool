@@ -25,17 +25,18 @@ public class A {
 	@Autowired
 	private HibernateTemplate hibernateTemplate;
 	
-	@Test
-	public void test2() {
-		List<String> list = new ArrayList<>();
-		list.add("a");
-		list.add("b");
-		list.add("c");
-		list.add("d");
-		
-		String[] arr = list.toArray(new String[0]);
-		System.out.println(arr.length);
-	}
+//	@Test
+//	public void test2() {
+//		List<String> list = new ArrayList<>();
+//		list.add("a");
+//		list.add("b");
+//		list.add("c");
+//		list.add("d");
+//		
+//		String[] arr = list.toArray(new String[0]);
+//		System.out.println(arr.length);
+//	}
+	
 	@Test
 	public void testDealer() throws Exception {
 		

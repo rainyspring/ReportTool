@@ -40,6 +40,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
  * XSSF and SAX (Event API) basic example. See {@link XLSX2CSV} for a fuller
  * example of doing XSLX processing with the XSSF Event code.
  */
+@Deprecated
 public class MyExcel2007ForPaging {
 
 	/**
