@@ -31,6 +31,26 @@ public class SheetDealer {
 	 * sheet页签序号（从0开始）
 	 */
 	public final int indexSheet;
+	/**
+	 * 模板的sheet名称的根值
+	 * 根值仅仅代表客户希望的名称，但现实很残酷，Excel对字符长度和种类都有限制.
+	 * Excel中sheet命名有如下规则：
+	 *（1）sheet名称不能多于31个（包含英文、汉字、| 、（）等，但是不能包含： 、/、？、*、[]等 )，
+	 * 程序中使用poi工具来生成的时候，传进去大于31个长度的字符串时，会被自动截取，
+	 * 便会导致两个名字变为一样的，出现sheet同名异常
+	 * （2）sheet名字不能为空，如果是null 或者""也会报错。
+	 */
+	private String sheetNameRoot = null;
+	/**
+	 * 真正的sheet名称
+	 */
+	private String realSheetName = null;
+	/*
+	 * 当sheetDealer内部Layer获取的数据只需一个sheet就能装下时，这个值没用。
+	 * 但当layer获取数据超出某些限制，比如A4值高度，即需要再次分页，还需要生成多个sheet，
+	 * 此时的sheet名称需要再原名称的基础上追加realSheetNameIndex即可
+	 */
+	private int realSheetNameIndex = 1;
 
 	/**
 	 * 默认的sheet名
@@ -71,7 +91,9 @@ public class SheetDealer {
 		}
 
 		// 为sheet页签命名,默认123456...
-		POIUtil.renameSheet(modelsheetOfMine, String.valueOf(this.indexSheet+1));
+		this.realSheetName = this.getRealSheetName();
+		POIUtil.renameSheet(modelsheetOfMine,this.realSheetName);
+
 
 		// 替换UI参数、替换分页参数（变成常量），将组替换符和排序替换符变为空
 		for (int i = 0; i <= this.modelsheetOfMine.getLastRowNum(); i++) {
@@ -143,7 +165,23 @@ public class SheetDealer {
 		}
 
 	}
+	/**
+	 * 获取sheet的真正名称
+	 */
+	private String getRealSheetName() {
+		if(StringUtils.isBlank(this.sheetNameRoot)) {
+			return String.valueOf(this.indexSheet+1);
+		}
+		String name = this.sheetNameRoot.replaceAll("[\\/?*\\[\\]]", "-");
+		
+		if(name.length()>=25) {
+			name = name.substring(0, 25);
+		}
+		return name;
+		
+	}
 
+	
 	/**
 	 * 清空上一页缓存，便于下一页使用 为了处理不同分页使用同一结构时，出现缓存的现象
 	 */
@@ -193,6 +231,14 @@ public class SheetDealer {
 
 		}
 
+	}
+
+	public String getSheetNameRoot() {
+		return sheetNameRoot;
+	}
+
+	public void setSheetNameRoot(String sheetNameRoot) {
+		this.sheetNameRoot = sheetNameRoot;
 	}
 
 }

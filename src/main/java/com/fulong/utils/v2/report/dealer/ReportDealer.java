@@ -78,6 +78,11 @@ public class ReportDealer {
 
 	/**
 	 * 模板的sheet名称
+	 * Excel中sheet命名有如下规则：
+	 *（1）sheet名称不能多于31个（包含英文、汉字、| 、（）等，但是不能包含： 、/、？、*、[]等 )，
+	 * 程序中使用poi工具来生成的时候，传进去大于31个长度的字符串时，会被自动截取，
+	 * 便会导致两个名字变为一样的，出现sheet同名异常
+	 * （2）sheet名字不能为空，如果是null 或者""也会报错。
 	 */
 	private String sheetname_modelSheet = null;
 
@@ -655,15 +660,16 @@ public class ReportDealer {
 				pagingSql4WherePiece = sheetname_modelSheet.replace(keys4Sheet, "");
 				// 去掉首尾的<>
 				pagingSql4WherePiece = pagingSql4WherePiece.substring(1, pagingSql4WherePiece.length() - 1);
-
+				//剥去替换符外衣，变成真正的wheresql
 				pagingSql4WherePiece = " and " + this.takeOffRegex(pagingSql4WherePiece, param);
 			}
 			// ------解析sheetname------end----------------
 
+			String sheetNameKey = null;
 			// 将包含多值的分页属性分隔开来
 			String[] array4Key = keys4Sheet.split(",");
-
-			for (int i = 0; i < array4Key.length; i++) {
+			int length = array4Key.length;
+			for (int i = 0; i < length; i++) {
 				String pageColumn = array4Key[i];
 
 				// 放入分页属性集合中(这里将分页属性的形如{ne.code}->{sheet.code}的原因是避免后期存在重复的{sheet.code},属性重复会造成sql错误)
@@ -678,6 +684,12 @@ public class ReportDealer {
 					// 取第一个值来获取分页对象名称
 					this.objectName = tempValue[0];
 				}
+				//默认去最后一个作为分页名称的默认根值
+				if(i==length-1) {
+					String pureColumn = RegexUtil.takeOffPropertyRegex(pageColumn);
+					String[] tempValue = pureColumn.split("\\.");
+					sheetNameKey = tempValue[1];
+				}
 			}
 
 			// 找到对应的真实的数据库表名或视图（去属性文件里找到对应关系）
@@ -686,7 +698,7 @@ public class ReportDealer {
 			// ":this.view4DB;
 
 			// 获取分页数据
-			List<Object[]> dataList_paging = this.getPagingData(session, pagingSql4WherePiece);
+			List<Map<String, String>> dataList_paging = this.getPagingData(session, pagingSql4WherePiece);
 			if (dataList_paging == null || dataList_paging.size() <= 0) {// 没数据，那么没有分页；
 				return getBlankSheet();
 			}
@@ -697,33 +709,25 @@ public class ReportDealer {
 			List<SheetDealer> sheetDealers = new ArrayList<SheetDealer>();
 
 
-			List<String> pageColumns = this.param.pagingColumnContainer.getOrInitializeCachePigingColumns();
-			int length = pageColumns.size();
+			// List<String> pageColumns = this.param.pagingColumnContainer.getOrInitializeCachePigingColumns();
 			// 获取每一页的数据集,每一页就是一个sheet
 			for (; pageIndex < dataList_paging.size(); pageIndex++) {
-				Object[] dataByPage = dataList_paging.get(pageIndex);
-				/*
-				 * 存储每页（sheet）的分页属性和同胞属性的(key-value)值对
-				 */
-				Map<String, String> pagingParamValues = new HashMap<String, String>();
-
-				for (int i = 0; i < length; i++) {
-					String columnValue = dataByPage[i] == null ? "" : String.valueOf(dataByPage[i].toString());
-					String columnName = pageColumns.get(i);
-					// 将值填到预先存好的同胞属性（包括分页属性）
-					pagingParamValues.put(columnName, columnValue);
-				}
-
+				
+				Map<String, String> pagingParamValues = dataList_paging.get(pageIndex);
+				
+				
 				// test
-				for (Map.Entry<String, String> entry : pagingParamValues.entrySet()) {
-					System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
-				}
+//				for (Map.Entry<String, String> entry : pagingParamValues.entrySet()) {
+//					System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+//				}
 
 				/*
 				 * 创建sheetDealer，并添加到集合中 注意：sheetDealer中的模板是主模板的克隆sheet
 				 */
-				sheetDealers.add(new SheetDealer(pageIndex, ReportDealer.cloneSheet(this.param.mainSheet), pagingParamValues,
-						this.param));
+				SheetDealer sheetDealer = new SheetDealer(pageIndex, ReportDealer.cloneSheet(this.param.mainSheet), pagingParamValues,
+						this.param);
+				sheetDealer.setSheetNameRoot(pagingParamValues.get(sheetNameKey));
+				sheetDealers.add(sheetDealer);
 			}
 
 			return sheetDealers;
@@ -767,7 +771,7 @@ public class ReportDealer {
 		 * @return
 		 * @throws MyReportException
 		 */
-		private List<Object[]> getPagingData(Session session, String whereOfGroup) throws MyReportException {
+		private List<Map<String, String>> getPagingData(Session session, String whereOfGroup) throws MyReportException {
 			/*
 			 * 将同胞属性集合拼凑成sql的select片段
 			 */
@@ -843,7 +847,27 @@ public class ReportDealer {
 			 */
 			List<Object[]> dataList_paging = session.createSQLQuery(sql.toString()).list();
 
-			return dataList_paging;
+			/*
+			 * 拼凑结构体
+			 */
+			List<Map<String, String>> mapResult = new ArrayList<>();
+			for (Object[] dataByPage: dataList_paging) {
+				/*
+				 * 存储每页（sheet）的分页属性和同胞属性的(key-value)值对
+				 */
+				Map<String, String> pagingParamValues = new HashMap<String, String>();
+
+				for (int i = 0; i < allPagingColumns.size(); i++) {
+					//分页属性的值
+					String columnValue = dataByPage[i] == null ? "" : String.valueOf(dataByPage[i].toString());
+					//分页属性的名称
+					String columnName = allPagingColumns.get(i);
+					// 将值填到预先存好的同胞属性（包括分页属性）
+					pagingParamValues.put(columnName, columnValue);
+				}
+				mapResult.add(pagingParamValues);
+			}
+			return mapResult;
 		}
 
 		/**
