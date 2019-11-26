@@ -3,8 +3,6 @@ package com.fulong.utils.v2.report.dealer;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.hibernate.Session;
 import org.junit.Test;
@@ -28,29 +26,19 @@ public class A {
 	@Autowired
 	private HibernateTemplate hibernateTemplate;
 	
-//	@Test
-//	public void test2() {
-//		List<String> list = new ArrayList<>();
-//		list.add("a");
-//		list.add("b");
-//		list.add("c");
-//		list.add("d");
-//		
-//		String[] arr = list.toArray(new String[0]);
-//		System.out.println(arr.length);
-//	}
-	
 	@Test
 	public void testDealer() throws Exception {
 		
 		Param p = new Param();
+		
+		
 //		p.templet = new File("F:\\a\\handoverTemplet\\sh\\SH3503-J113表-合格焊工登记表.xlsx");
-		p.templet = new File("F:\\a\\handoverTemplet\\sh\\SH3503-J411-1表-管道焊接接头热处理报告（一）.xlsx");
+		p.templet = new File("F:\\a\\handoverTemplet\\sh\\SH3543-G401表-管道焊接接头无损检测日委托单.xlsx");
 		
 		File f = this.createReport(p);
 		
-		//Files.move(f.toPath(), Paths.get("F:/a.xlsx"));
-		System.out.println();
+		Files.move(f.toPath(), Paths.get("F:/a.xlsx"));
+		System.out.println("success");
 	}
 	
 	private File createReport(Param param) throws Exception {
