@@ -1,6 +1,8 @@
 package com.fulong.utils.v2.report.dealer;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +19,8 @@ import com.fulong.utils.v2.report.Param;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = { "classpath:applicationContext.xml"
+@ContextConfiguration(locations = { "classpath:config/applicationContext.xml"
+		,"classpath:config/app-hibernate.xml"
 		/* ,"file:src/main/webapp/WEB-INF/dispatcherServlet-servlet.xml" */ })
 public class A {
 
@@ -40,10 +43,13 @@ public class A {
 	@Test
 	public void testDealer() throws Exception {
 		
-		Param param = new Param();
+		Param p = new Param();
+//		p.templet = new File("F:\\a\\handoverTemplet\\sh\\SH3503-J113表-合格焊工登记表.xlsx");
+		p.templet = new File("F:\\a\\handoverTemplet\\sh\\SH3503-J411-1表-管道焊接接头热处理报告（一）.xlsx");
 		
-		File f = this.createReport(param);
-	
+		File f = this.createReport(p);
+		
+		//Files.move(f.toPath(), Paths.get("F:/a.xlsx"));
 		System.out.println();
 	}
 	

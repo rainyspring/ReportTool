@@ -903,6 +903,9 @@ public class ReportDealer {
 	 */
 	private void finishInServer() throws IOException {
 		this.outDir = (this.outDir == null ? PathUtil.getTempSavePath(null) : this.outDir);
+		if(!this.outDir.toFile().exists()) {
+			this.outDir.toFile().mkdirs();
+		}
 		Path path = this.outDir
 				.resolve(UUID.randomUUID().toString() + FileUtil.getSuffix(this.param.templet.getName(), true));
 		this.outputFile = path.toFile();
