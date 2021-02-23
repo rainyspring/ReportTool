@@ -621,8 +621,8 @@ public class LoopLayer extends BaseLayer {
 		// 找到动态列的列号
 		int dynamicColStartCol = this.param.getDynamicField_startCol();
 		// 找到复制的样式
-		CellStyle modelStyle = null;
-
+		CellStyle rowStyle = null;
+		Short rowHeight = 20;
 		for (int i = 0; i < olist.size(); i++, currentIndexRow++) {// 遍历行
 
 			// 初次获取row值
@@ -636,7 +636,15 @@ public class LoopLayer extends BaseLayer {
 			r.addAll(Arrays.asList(initialArr));
 
 			Row row = POIUtil.getOrCreateRow(sheet, currentIndexRow);
-
+			//设计行样式
+			if(i==0) {
+				rowStyle = row.getRowStyle();
+				rowHeight = row.getHeight();
+			}else {
+				row.setRowStyle(rowStyle);
+				row.setHeight(rowHeight);
+			}
+			
 			int data4Row = r.size() - 1;// 将补全的属性剔除
 			for (int j = 0; j < data4Row; j++) {// 遍历行内单元格,
 				Cell c = POIUtil.getOrCreateCell(row, j);
