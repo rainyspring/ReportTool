@@ -1,6 +1,6 @@
 package com.fulong.utils.v2.tool;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 只有true、false两种状态的信息类

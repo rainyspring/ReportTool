@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class PathUtil {
 	/**

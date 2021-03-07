@@ -1,6 +1,6 @@
 package com.fulong.utils.v2.report.tool;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class MathUtil {
 	
