@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 	<name>jx</name>
 	<description>jx</description>
-
+ 
 	<properties>
 		<!-- 指定源码 , 编译器的编码为 UTF-8 编码 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
