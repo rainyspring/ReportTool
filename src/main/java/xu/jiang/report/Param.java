@@ -8,9 +8,9 @@ import java.util.TreeMap;
 
 import org.apache.poi.ss.usermodel.Sheet;
 
-import xu.jiang.report.v2.report.bean.Layer;
-import xu.jiang.report.v2.report.bean.PagingColumnContainer;
-import xu.jiang.report.v2.report.dto.MilepostDTO;
+import xu.jiang.report.bean.Layer;
+import xu.jiang.report.bean.PagingColumnContainer;
+import xu.jiang.report.dto.MilepostDTO;
 
 /**
  * 全局报表公共参数，管理所有和报表相关的参数
@@ -32,18 +32,18 @@ public class Param {
 
 	}
 
-	/**
-	 * @deprecated
-	 * @author: jx  
-	 * @Title:  Param   
-	 * @Description:    TODO(这里用一句话描述这个方法的作用)   
-	 * @param:  @param modelFileName  
-	 * @throws
-	 */
-	public Param(String modelFileName) {
-		this.modelFileName = modelFileName;
-		init();
-	}
+//	/**
+//	 * @deprecated
+//	 * @author: jx  
+//	 * @Title:  Param   
+//	 * @Description:    TODO(这里用一句话描述这个方法的作用)   
+//	 * @param:  @param modelFileName  
+//	 * @throws
+//	 */
+////	public Param(String modelFileName) {
+////		this.modelFileName = modelFileName;
+////		init();
+////	}
 	
 	public Param(File templet) {
 		this.templet = templet;
