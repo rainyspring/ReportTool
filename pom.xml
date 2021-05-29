@@ -35,7 +35,7 @@
 		<fileupload.version>1.3.1</fileupload.version>
 		<junit.version>4.12</junit.version>
 		<freemarker.version>2.3.16</freemarker.version>
-		<jackson.version>2.9.6</jackson.version>
+		<jackson.version>2.9.10.7</jackson.version>
 		<opencsv.version>3.3</opencsv.version>
 		<jstl.version>1.2</jstl.version>
 		<servlet-api.version>8.0.35</servlet-api.version>
