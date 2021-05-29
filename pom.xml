@@ -115,16 +115,6 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
-		<!-- <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-ehcache</artifactId> 
-			<version>${hibernate.version}</version> </dependency> -->
-
-		<!-- hibernate相关 end -->
-		<!-- mybais -->
-		<!-- <dependency> <groupId>org.mybatis</groupId> <artifactId>mybatis</artifactId> 
-			<version>${mybais.version}</version> </dependency> -->
-		<!-- mybatis - spring 整合包 -->
-		<!-- <dependency> <groupId>org.mybatis</groupId> <artifactId>mybatis-spring</artifactId> 
-			<version>${mybatis-spring.version}</version> </dependency> -->
 
 		<!-- poi -->
 		<dependency>
@@ -143,15 +133,6 @@
 			<version>${poi.version}</version>
 		</dependency>
 
-		<!-- <dependency> <groupId>org.apache.poi</groupId> <artifactId>poi-examples</artifactId> 
-			<version>${poi.version}</version> </dependency> -->
-		<!-- <dependency> <groupId>org.apache.poi</groupId> <artifactId>poi-excelant</artifactId> 
-			<version>${poi.version}</version> </dependency> <dependency> <groupId>org.apache.poi</groupId> 
-			<artifactId>poi-scratchpad</artifactId> <version>${poi.version}</version> 
-			</dependency> -->
-
-		<!-- 适合Tomcat 的缩减版ooxml-schemas-3.9 <dependency> <groupId>org.apache.poi</groupId> 
-			<artifactId>poi-ooxml-schemas</artifactId> <version>3.9</version> </dependency> -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>ooxml-schemas</artifactId>
@@ -196,9 +177,7 @@
 			<version>${ojdbc7.version}</version> </dependency> -->
 		<!-- mysql end -->
 
-		<!-- dbcp 数据源 https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
-		<!-- <dependency> <groupId>commons-dbcp</groupId> <artifactId>commons-dbcp</artifactId> 
-			<version>1.4</version> </dependency> -->
+		
 		<!-- 阿里巴巴的数据库连接池 -->
 		<!-- <dependency> <groupId>com.alibaba</groupId> <artifactId>druid</artifactId> 
 			<version>${druid.version}</version> </dependency> aop <dependency> <groupId>aopalliance</groupId> 
@@ -239,13 +218,6 @@
 			<version>${commons.lang}</version>
 		</dependency>
 
-		<!-- 第三方库 -->
-		<!-- <dependency> <groupId>com.jacob</groupId> <artifactId>jacob</artifactId> 
-			<version>1.18</version> </dependency> -->
-		<!-- https://mvnrepository.com/artifact/com.jacob/jacob -->
-		<!-- <dependency> <groupId>com.jacob</groupId> <artifactId>jacob</artifactId> 
-			<version>1.10</version> </dependency> -->
-
 
 		<!-- junit单元测试 -->
 		<dependency>
@@ -262,23 +234,9 @@
 			<version>${servlet-api.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- jstl 标准标签库 <dependency> <groupId>javax.servlet</groupId> <artifactId>jstl</artifactId> 
-			<version>${jstl.version}</version> </dependency> -->
-
-		<!-- jsp-api 8.5.32 -->
-		<!-- <dependency> <groupId>org.apache.tomcat</groupId> <artifactId>tomcat-jsp-api</artifactId> 
-			<version>${jsp-api.version}</version> <scope>provided</scope> </dependency> -->
 
 
 	</dependencies>
-	<!--配置pom 将jar包可以上传到nexus仓库中 -->
-	<!-- <distributionManagement> <repository> <id>releases</id> <url>http://192.168.0.174:7070/repository/maven-releases/</url> 
-		</repository> <snapshotRepository> <id>snapshots</id> <url>http://192.168.0.174:7070/repository/maven-snapshots/</url> 
-		</snapshotRepository> </distributionManagement> -->
-
-	<!-- <distributionManagement> <repository> <id>internal.repo</id> <name>Temporary 
-		Staging Repository</name> <url>file://${project.build.directory}/maven-repository</url> 
-		</repository> </distributionManagement> -->
 
 	<url>https://github.com/rainyspring/maven-repository</url>
 	<build>
