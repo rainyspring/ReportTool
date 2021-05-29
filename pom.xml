@@ -1,15 +1,15 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.fulong.tool</groupId>
-	<artifactId>tool-common</artifactId>
-	<!-- <version>2.1.6</version> -->
-	<version>2.1.7-SNAPSHOT</version>
+	<groupId>xu.jiang.report</groupId>
+	<artifactId>violet</artifactId>
+	<version>1.0.0</version>
+	<!-- <version>2.2.1-SNAPSHOT</version> -->
 	<packaging>jar</packaging>
 	<name>jx</name>
 	<description>jx</description>
-
+ 
 	<properties>
 		<!-- 指定源码 , 编译器的编码为 UTF-8 编码 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -47,6 +47,10 @@
 		<!-- plugins version -->
 		<maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
 		<tomcat7-maven-plugin.version>2.2</tomcat7-maven-plugin.version>
+
+		<!-- 将jar 发布到github上。 此处配置的名称要和maven配置文件对应的serverId一致 -->
+		<github.global.server>github</github.global.server>
+		<jedis.version>3.0.0</jedis.version>
 	</properties>
 
 	<dependencies>
@@ -66,7 +70,8 @@
 			<artifactId>spring-tx</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		<dependency>		<!-- orm 整合第三方orm实现 -->
+		<!-- orm 整合第三方orm实现 -->
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
 			<version>${spring.version}</version>
@@ -87,11 +92,8 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<!-- spring 表达式语言 -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-expression</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
+		<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-expression</artifactId> 
+			<version>${spring.version}</version> </dependency> -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
@@ -114,25 +116,6 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-ehcache</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
-
-		<!-- hibernate相关 end -->
-		<!-- mybais -->
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-			<version>${mybais.version}</version>
-		</dependency>
-		<!-- mybatis - spring 整合包 -->
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis-spring</artifactId>
-			<version>${mybatis-spring.version}</version>
-		</dependency>
 
 		<!-- poi -->
 		<dependency>
@@ -150,32 +133,7 @@
 			<artifactId>poi-ooxml-schemas</artifactId>
 			<version>${poi.version}</version>
 		</dependency>
-		
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-examples</artifactId>
-			<version>${poi.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-excelant</artifactId>
-			<version>${poi.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-scratchpad</artifactId>
-			<version>${poi.version}</version>
-		</dependency>
-		
-		<!--  适合Tomcat 的缩减版ooxml-schemas-3.9 
 
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml-schemas</artifactId>
-			<version>3.9</version>
-		</dependency>
-		
-		-->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>ooxml-schemas</artifactId>
@@ -201,11 +159,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-			<version>${fastjson.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>net.sf.json-lib</groupId>
 			<artifactId>json-lib</artifactId>
 			<version>${net.sf.json-lib.version}</version>
@@ -215,66 +168,33 @@
 
 
 		<!-- mysql -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql-connector.version}</version>
-		</dependency>
+		<!-- <dependency> <groupId>mysql</groupId> <artifactId>mysql-connector-java</artifactId> 
+			<version>${mysql-connector.version}</version> </dependency> -->
 
 		<!-- ojdbc7 -->
-		<!-- <dependency>
-			<groupId>cn.easyproject</groupId>
-			<artifactId>ojdbc7</artifactId>
-			<version>${ojdbc7.version}</version>
-		</dependency> -->
+		<!-- <dependency> <groupId>cn.easyproject</groupId> <artifactId>ojdbc7</artifactId> 
+			<version>${ojdbc7.version}</version> </dependency> -->
 		<!-- mysql end -->
 
-		<!-- dbcp 数据源 https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
-		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>1.4</version>
-		</dependency>
+		
 		<!-- 阿里巴巴的数据库连接池 -->
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>druid</artifactId>
-			<version>${druid.version}</version>
-		</dependency>
+		<!-- <dependency> <groupId>com.alibaba</groupId> <artifactId>druid</artifactId> 
+			<version>${druid.version}</version> </dependency> aop <dependency> <groupId>aopalliance</groupId> 
+			<artifactId>aopalliance</artifactId> <version>${aopalliance.version}</version> 
+			</dependency> -->
 
-		<!-- aop -->
-		<dependency>
-			<groupId>aopalliance</groupId>
-			<artifactId>aopalliance</artifactId>
-			<version>${aopalliance.version}</version>
-		</dependency>
-
-
-		<!-- aop end --> 
+		<!-- aop end -->
 
 		<!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
-		<dependency>
-			<groupId>org.freemarker</groupId>
-			<artifactId>freemarker</artifactId>
-			<version>${freemarker.version}</version>
-		</dependency>
+		<!-- <dependency> <groupId>org.freemarker</groupId> <artifactId>freemarker</artifactId> 
+			<version>${freemarker.version}</version> </dependency> -->
 
 		<!-- log -->
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>${log4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j-api.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-nop</artifactId>
-			<version>${slf4j-nop.version}</version>
-		</dependency>
+		<!-- <dependency> <groupId>log4j</groupId> <artifactId>log4j</artifactId> 
+			<version>${log4j.version}</version> </dependency> <dependency> <groupId>org.slf4j</groupId> 
+			<artifactId>slf4j-api</artifactId> <version>${slf4j-api.version}</version> 
+			</dependency> <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-nop</artifactId> 
+			<version>${slf4j-nop.version}</version> </dependency> -->
 		<!-- log end -->
 
 		<!-- opencsv -->
@@ -289,6 +209,7 @@
 			<artifactId>commons-fileupload</artifactId>
 			<version>${fileupload.version}</version>
 		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -296,19 +217,6 @@
 			<version>${commons.lang}</version>
 		</dependency>
 
-		<!-- 第三方库 -->
-		<!-- <dependency>
-			<groupId>com.jacob</groupId>
-			<artifactId>jacob</artifactId>
-			<version>1.18</version>
-		</dependency> -->
-		<!-- https://mvnrepository.com/artifact/com.jacob/jacob -->
-		<!-- <dependency>
-		    <groupId>com.jacob</groupId>
-		    <artifactId>jacob</artifactId>
-		    <version>1.10</version>
-		</dependency> -->
-		
 
 		<!-- junit单元测试 -->
 		<dependency>
@@ -325,56 +233,91 @@
 			<version>${servlet-api.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- jstl 标准标签库 -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>${jstl.version}</version>
-		</dependency>
 
-		<!-- jsp-api 8.5.32 -->
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-jsp-api</artifactId>
-			<version>${jsp-api.version}</version>
-			<scope>provided</scope>
-		</dependency>
+
 	</dependencies>
-	<!--配置pom 将jar包可以上传到nexus仓库中 -->
-	<distributionManagement>
-		<repository>
-			<id>releases</id>
-			<url>http://192.168.0.174:7070/repository/maven-releases/</url>
-		</repository>
-		<snapshotRepository>
-			<id>snapshots</id>
-			<url>http://192.168.0.174:7070/repository/maven-snapshots/</url>
-		</snapshotRepository>
-	</distributionManagement>
 
-	<!-- tomcat 热部署 -->
+	
 	<build>
 		<plugins>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven-compiler-plugin.version}</version>
+				<version>3.5.1</version>
+
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
+
 			</plugin>
 
 			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>${tomcat7-maven-plugin.version}</version>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- maven部署的插件,部署本地. 使用mvn clean deploy命令部署 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.8.2</version>
 				<configuration>
-					<url>http://localhost:8080/manager/text</url>
-					<username>joey</username>
-					<password>123123</password>
+					<!-- 配置本地打包后的本地仓库存储地址，后续上传jar包会从此仓库中去取 -->
+					<altDeploymentRepository>internal.repo::default::file://${project.build.directory}/maven-repository</altDeploymentRepository>
 				</configuration>
 			</plugin>
+			
+			<!-- 部署到远端github仓库的插件: -->
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>0.12</version>
+				<configuration>
+					<message>Maven artifacts for
+						${project.artifactId}-${project.version}</message>
+					<noJekyll>true</noJekyll>
+					<!-- 指定从哪里去取打好的包，并上传至github -->
+					<outputDirectory>${project.build.directory}/maven-repository</outputDirectory>
+					<!-- 指定要上传的分支, refs/heads 这个不变，后面的分支名可选，可以采取一个jar包使用一个分支的策略。 若多个jar包同时发布在同一个分支的话，会覆盖。。。。 -->
+					<branch>refs/heads/develop</branch>
+					<!--  -->
+				<!-- 	<merge>true</merge> -->
+					<dryRun>true</dryRun>
+					<!-- 包含outputDirectory标签内填的文件夹中的所有内容 -->
+					<includes>
+						<include>**/*</include>
+					</includes>
+					<!-- github远程存储outputDirectory标签内填的文件夹中的内容 -->
+					<repositoryName>maven-repository</repositoryName>
+					<!-- github的用户名，注意不是登录的用户名，此项需要登录后，进入https://github.com/settings/profile页面配置Name属性， 
+						否则会报 [ERROR] Failed to execute goal com.github.github:site-maven-plugin:0.12:site 
+						(default) on project rfcore: Error creating commit: Invalid request. [ERROR] 
+						For 'properties/name', nil is not a string. [ERROR] For 'properties/name', 
+						nil is not a string. (422) [ERROR] -> [Help 1] 的错误 -->
+					<repositoryOwner>rainyspring</repositoryOwner>
+				</configuration>
+
+				<executions>
+					<execution>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<phase>deploy</phase>
+					</execution>
+				</executions>
+			</plugin>
+
 
 		</plugins>
 
@@ -401,5 +344,5 @@
 		</resources>
 	</build>
 
-
+	
 </project>
