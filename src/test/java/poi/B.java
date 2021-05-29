@@ -15,7 +15,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Test;
 
-import xu.jiang.report.v2.poi.DomPOI;
+import xu.jiang.report.poi.DomPOI;
 import xu.jiang.report.v2.report.tool.POIUtil;
 
 public class B {
