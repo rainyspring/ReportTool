@@ -1,4 +1,4 @@
-package xu.jiang.report.v2.report;
+package xu.jiang.report;
 
 import java.io.File;
 import java.util.HashMap;

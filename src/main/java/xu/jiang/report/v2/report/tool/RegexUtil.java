@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
-import xu.jiang.report.v2.report.Param;
+import xu.jiang.report.Param;
 
 /**
  * 报表中关于正则的帮助类

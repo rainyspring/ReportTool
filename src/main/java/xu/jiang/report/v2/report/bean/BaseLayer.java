@@ -1,6 +1,6 @@
 package xu.jiang.report.v2.report.bean;
 
-import xu.jiang.report.v2.report.Param;
+import xu.jiang.report.Param;
 
 public abstract class BaseLayer implements Layer {
 	private final int index;//层的序号

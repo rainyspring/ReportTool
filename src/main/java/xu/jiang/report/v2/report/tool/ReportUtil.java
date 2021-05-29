@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 
-import xu.jiang.report.v2.report.Param;
+import xu.jiang.report.Param;
 import xu.jiang.report.v2.report.dealer.ReportDealer;
 import xu.jiang.report.v2.tool.file.FileUtil;
 

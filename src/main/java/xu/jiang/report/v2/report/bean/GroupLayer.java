@@ -6,7 +6,7 @@ import java.util.TreeSet;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.hibernate.Session;
 
-import xu.jiang.report.v2.report.Param;
+import xu.jiang.report.Param;
 
 /**
  * 组：带有循环层1个和小计层N个实现阶梯型展现
