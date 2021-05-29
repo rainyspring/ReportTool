@@ -19,7 +19,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import xu.jiang.report.util.BaseHelper;
 import xu.jiang.report.util.PathUtil;
-import xu.jiang.report.v2.error.MyExcelException;
 
 public class SaxPOI {
 	private static SaxPOI instance = null;
@@ -119,11 +118,12 @@ public class SaxPOI {
 	 * @throws IOException
 	 */
 	private static String createFileNameInServer(String myFileName, String id)
-			throws MyExcelException, IllegalStateException, IOException {
+			throws  IllegalStateException, IOException {
 
 		// 如果名称不为“”,说明该文件存在，否则说明该文件不存在
 		if (BaseHelper.isNullorEmpty(myFileName.trim())) {
-			throw new MyExcelException("获取文件名为空");
+			System.err.println("获取文件名为空");
+			return null;
 		}
 
 		// 为文件名字加上guid，如果没有后缀名，就直接加上guid
@@ -153,7 +153,8 @@ public class SaxPOI {
 				request.getSession().getServletContext());
 		// 判断 request 是否有文件上传,即多部分请求
 		if (!multipartResolver.isMultipart(request)) {
-			throw new MyExcelException("spring 解析上传组件出现异常");
+			System.err.println("spring 解析上传组件出现异常");
+			return new ArrayList<>(0);
 		}
 		// 转换成多部分request
 		MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
@@ -168,7 +169,8 @@ public class SaxPOI {
 			// 取得上传文件,默认只处理一个文件
 			MultipartFile file = multiRequest.getFile(iter.next());
 			if (BaseHelper.isNullorEmpty(file)) {
-				throw new MyExcelException("文件为空");
+				System.err.println("文件为空");
+				return new ArrayList<>(0);
 			}
 
 			// 取得当前上传文件的文件名称

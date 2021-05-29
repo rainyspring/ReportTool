@@ -37,7 +37,6 @@ import xu.jiang.report.util.PathUtil;
 import xu.jiang.report.util.SQLUtil;
 import xu.jiang.report.util.file.FileUtil;
 import xu.jiang.report.v2.bean.KeyValue;
-import xu.jiang.report.v2.error.MyReportException;
 import xu.jiang.report.v2.poi.DomPOI;
 import xu.jiang.report.v2.report.bean.BaseLayer;
 import xu.jiang.report.v2.report.bean.GroupLayer;
@@ -624,7 +623,7 @@ public class ReportDealer {
 		 * @param pagingBrothersColumns
 		 * @throws IOException
 		 */
-		public List<SheetDealer> page2Sheet(Session session) throws MyReportException, IOException {
+		public List<SheetDealer> page2Sheet(Session session) throws IOException {
 
 			/*
 			 * 检测是否已经获取了模板sheet名称
@@ -770,7 +769,7 @@ public class ReportDealer {
 		 * @return
 		 * @throws MyReportException
 		 */
-		private List<Map<String, String>> getPagingData(Session session, String whereOfGroup) throws MyReportException {
+		private List<Map<String, String>> getPagingData(Session session, String whereOfGroup) {
 			/*
 			 * 将同胞属性集合拼凑成sql的select片段
 			 */

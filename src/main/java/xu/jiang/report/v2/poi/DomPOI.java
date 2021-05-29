@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,7 +28,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import xu.jiang.report.util.BaseHelper;
-import xu.jiang.report.v2.error.MyExcelException;
 import xu.jiang.report.v2.report.tool.POIUtil;
 
 public final class DomPOI {
@@ -236,7 +236,7 @@ public final class DomPOI {
 	 */
 	public static List<List<String>> getDataBySingleUploadFile(
 			HttpServletRequest request) throws IllegalStateException,
-			IOException, MyExcelException, InvalidFormatException {
+			IOException, InvalidFormatException {
 		
 		return DomPOI.getDataBySingleUploadFile(request, TITLELINE_ROW_INDEX);
 
@@ -255,7 +255,7 @@ public final class DomPOI {
 	 */
 	public static List<List<String>> getDataBySingleUploadFile(
 			HttpServletRequest request,int headLineRowByPOIDOM) throws IllegalStateException,
-			IOException, MyExcelException, InvalidFormatException {
+			IOException, InvalidFormatException {
 		
 		return DomPOI.getDataBySingleUploadFile(request, headLineRowByPOIDOM,-1);
 
@@ -274,14 +274,15 @@ public final class DomPOI {
 	 */
 	public static List<List<String>> getDataBySingleUploadFile(
 			HttpServletRequest request,int headLineRowByPOIDOM,int maxCol) throws IllegalStateException,
-			IOException, MyExcelException, InvalidFormatException {
+			IOException, InvalidFormatException {
 		headLineRowByPOIDOM=headLineRowByPOIDOM<=-1?-1:headLineRowByPOIDOM;
 		// 创建一个通用的多部分解析器
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
 				request.getSession().getServletContext());
 		// 判断 request 是否有文件上传,即多部分请求
 		if (!multipartResolver.isMultipart(request)) {
-			throw new MyExcelException("spring 解析上传组件出现异常");
+			System.err.println("spring 解析上传组件出现异常");
+			return new ArrayList<List<String>>(0);
 		}
 		// 转换成多部分request
 		MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
@@ -293,13 +294,15 @@ public final class DomPOI {
 		// 取得上传文件,默认只处理一个文件
 		MultipartFile file = multiRequest.getFile(iter.next());
 		if (BaseHelper.isNullorEmpty(file)) {
-			throw new MyExcelException("文件为空");
+			System.err.println("文件为空");
+			return new ArrayList<List<String>>(0);
 		}
 		// 取得当前上传文件的文件名称
 		String myFileName = file.getOriginalFilename();
 		// 如果名称不为“”,说明该文件存在，否则说明该文件不存在
 		if (BaseHelper.isNullorEmpty(myFileName.trim())) {
-			throw new MyExcelException("获取文件名为空");
+			System.err.println("获取文件名为空");
+			return new ArrayList<List<String>>(0);
 		}
 		
 		List<List<String>> returnData = DomPOI.getData(
