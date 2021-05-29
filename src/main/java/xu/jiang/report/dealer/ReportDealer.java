@@ -32,6 +32,11 @@ import org.hibernate.Session;
 import net.sf.json.JSONObject;
 import xu.jiang.report.Param;
 import xu.jiang.report.R;
+import xu.jiang.report.bean.BaseLayer;
+import xu.jiang.report.bean.GroupLayer;
+import xu.jiang.report.bean.KeyValue;
+import xu.jiang.report.bean.LoopLayer;
+import xu.jiang.report.bean.RangeCell;
 import xu.jiang.report.dto.LayerDTO;
 import xu.jiang.report.dto.MilepostDTO;
 import xu.jiang.report.poi.DomPOI;
@@ -43,11 +48,6 @@ import xu.jiang.report.util.file.FileUtil;
 import xu.jiang.report.util.report.MergingCellUtil;
 import xu.jiang.report.util.report.POIUtil;
 import xu.jiang.report.util.report.RegexUtil;
-import xu.jiang.report.v2.report.bean.BaseLayer;
-import xu.jiang.report.v2.report.bean.GroupLayer;
-import xu.jiang.report.v2.report.bean.KeyValue;
-import xu.jiang.report.v2.report.bean.LoopLayer;
-import xu.jiang.report.v2.report.bean.RangeCell;
 
 /**
  * 报表处理总入口

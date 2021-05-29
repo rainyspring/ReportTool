@@ -1,4 +1,4 @@
-package xu.jiang.report.v2.paging.render;
+package xu.jiang.report.paging.render;
 
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
@@ -8,7 +8,7 @@ import org.hibernate.ScrollMode;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 
-import xu.jiang.report.v2.paging.AbstractCommonPaging;
+import xu.jiang.report.paging.AbstractCommonPaging;
 
 /**
  * 专用用hibernate分页读取数据

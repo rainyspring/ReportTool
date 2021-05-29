@@ -19,8 +19,8 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import xu.jiang.report.bean.RangeCell;
 import xu.jiang.report.util.BooleanMsg;
-import xu.jiang.report.v2.report.bean.RangeCell;
 
 /**
  * 读取Excel中单元格的值

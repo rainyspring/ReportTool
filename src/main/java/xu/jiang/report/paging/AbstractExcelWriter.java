@@ -1,4 +1,4 @@
-package xu.jiang.report.v2.paging;
+package xu.jiang.report.paging;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,10 +15,10 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.hibernate.ScrollableResults;
 
+import xu.jiang.report.paging.render.AbstractSimallDataRender;
+import xu.jiang.report.paging.render.HibernateRender;
 import xu.jiang.report.util.PathUtil;
 import xu.jiang.report.util.RandomGUID;
-import xu.jiang.report.v2.paging.render.AbstractSimallDataRender;
-import xu.jiang.report.v2.paging.render.HibernateRender;
 
 /**
  * 在模板基础上的Excel写入

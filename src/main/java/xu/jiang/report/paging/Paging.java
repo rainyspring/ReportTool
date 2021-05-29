@@ -1,4 +1,4 @@
-package xu.jiang.report.v2.paging;
+package xu.jiang.report.paging;
 
 import java.lang.reflect.InvocationTargetException;
 

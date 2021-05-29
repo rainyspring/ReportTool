@@ -1,12 +1,12 @@
-package xu.jiang.report.v2.paging.writer;
+package xu.jiang.report.paging.writer;
 
 import java.io.IOException;
 
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import xu.jiang.report.v2.paging.AbstractExcelWriter;
-import xu.jiang.report.v2.paging.Paging;
+import xu.jiang.report.paging.AbstractExcelWriter;
+import xu.jiang.report.paging.Paging;
 
 /**
  * 无模板的Excel写入（仅支持xlsx格式） 优点：支持大数据写入，写入过程结合POI处理大数据写入特点 技术点：使用POI的SXSSFWorkbook类

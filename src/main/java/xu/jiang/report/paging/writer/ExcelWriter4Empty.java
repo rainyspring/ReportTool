@@ -1,12 +1,12 @@
-package xu.jiang.report.v2.paging.writer;
+package xu.jiang.report.paging.writer;
 
 import java.io.IOException;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import xu.jiang.report.v2.paging.AbstractExcelWriter;
-import xu.jiang.report.v2.paging.Paging;
+import xu.jiang.report.paging.AbstractExcelWriter;
+import xu.jiang.report.paging.Paging;
 
 /**
  * 无模板的Excel写入（包括xls和xlsx格式）

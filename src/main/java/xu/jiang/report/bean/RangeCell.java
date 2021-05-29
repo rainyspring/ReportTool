@@ -1,4 +1,4 @@
-package xu.jiang.report.v2.report.bean;
+package xu.jiang.report.bean;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.util.CellRangeAddress;

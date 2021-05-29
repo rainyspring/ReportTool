@@ -1,4 +1,4 @@
-package xu.jiang.report.v2.report.bean;
+package xu.jiang.report.bean;
 
 import java.util.Map;
 import java.util.TreeSet;

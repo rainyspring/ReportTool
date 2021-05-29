@@ -1,11 +1,11 @@
-package xu.jiang.report.v2.paging.render;
+package xu.jiang.report.paging.render;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import xu.jiang.report.v2.paging.AbstractCommonPaging;
-import xu.jiang.report.v2.paging.Paging;
+import xu.jiang.report.paging.AbstractCommonPaging;
+import xu.jiang.report.paging.Paging;
 
 /**
  * 小量数据封装器：一次性提供所有数据(内存消耗大)

@@ -1,4 +1,4 @@
-package xu.jiang.report.v2.report.bean;
+package xu.jiang.report.bean;
 
 /**
  * @description:TODO(分页属性（这里将分页属性和同胞属性统称为 分页属性，不再将分页属性和同胞属性单独区分）)

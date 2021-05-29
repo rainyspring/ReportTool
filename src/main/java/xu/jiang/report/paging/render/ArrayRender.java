@@ -1,4 +1,4 @@
-package xu.jiang.report.v2.paging.render;
+package xu.jiang.report.paging.render;
 
 import java.util.List;
 /**

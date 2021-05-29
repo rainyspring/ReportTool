@@ -1,4 +1,4 @@
-package xu.jiang.report.v2.paging.render;
+package xu.jiang.report.paging.render;
 /**
  * 由于虽然BeanRender 能通过反射自动获取每个getXX 的值，
  * 但是无法控制值的顺序，故要导出的Bean实现此接口
