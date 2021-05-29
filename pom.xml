@@ -1,10 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>xu.jiang.report</groupId>
 	<artifactId>violet</artifactId>
-	<version>0.2.0</version>
+	<version>1.0.0</version>
 	<!-- <version>2.2.1-SNAPSHOT</version> -->
 	<packaging>jar</packaging>
 	<name>jx</name>
@@ -50,6 +50,7 @@
 
 		<!-- 将jar 发布到github上。 此处配置的名称要和maven配置文件对应的serverId一致 -->
 		<github.global.server>github</github.global.server>
+		<jedis.version>3.0.0</jedis.version>
 	</properties>
 
 	<dependencies>
@@ -157,8 +158,6 @@
 			<version>${jackson.version}</version>
 		</dependency>
 
-		<!-- <dependency> <groupId>com.alibaba</groupId> <artifactId>fastjson</artifactId> 
-			<version>${fastjson.version}</version> </dependency> -->
 		<dependency>
 			<groupId>net.sf.json-lib</groupId>
 			<artifactId>json-lib</artifactId>
@@ -238,10 +237,9 @@
 
 	</dependencies>
 
-	<url>https://github.com/rainyspring/maven-repository</url>
+	
 	<build>
 		<plugins>
-
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -269,6 +267,7 @@
 				</executions>
 			</plugin>
 
+			<!-- maven部署的插件,部署本地. 使用mvn clean deploy命令部署 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
@@ -278,11 +277,12 @@
 					<altDeploymentRepository>internal.repo::default::file://${project.build.directory}/maven-repository</altDeploymentRepository>
 				</configuration>
 			</plugin>
+			
+			<!-- 部署到远端github仓库的插件: -->
 			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>site-maven-plugin</artifactId>
-				<version>0.9</version>
-
+				<version>0.12</version>
 				<configuration>
 					<message>Maven artifacts for
 						${project.artifactId}-${project.version}</message>
@@ -290,7 +290,10 @@
 					<!-- 指定从哪里去取打好的包，并上传至github -->
 					<outputDirectory>${project.build.directory}/maven-repository</outputDirectory>
 					<!-- 指定要上传的分支, refs/heads 这个不变，后面的分支名可选，可以采取一个jar包使用一个分支的策略。 若多个jar包同时发布在同一个分支的话，会覆盖。。。。 -->
-					<branch>refs/heads/master</branch>
+					<branch>refs/heads/develop</branch>
+					<!--  -->
+				<!-- 	<merge>true</merge> -->
+					<dryRun>true</dryRun>
 					<!-- 包含outputDirectory标签内填的文件夹中的所有内容 -->
 					<includes>
 						<include>**/*</include>
@@ -311,17 +314,6 @@
 							<goal>site</goal>
 						</goals>
 						<phase>deploy</phase>
-						<configuration>
-							<!-- must match the server's id -->
-							<server>github</server>
-
-							<!-- The commit message -->
-							<message>Building site for my project</message>
-							<!-- The location where the site is uploaded -->
-							<path>${site.path}</path>
-							<!-- Use merge or override the content -->
-							<merge>true</merge>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -352,19 +344,5 @@
 		</resources>
 	</build>
 
-	<repositories>
-		<repository>
-			<id>egit</id>
-			<name>Eclipse egit</name>
-			<url>https://repo.eclipse.org/content/repositories/egit-releases/</url>
-		</repository>
-	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>egit</id>
-			<name>Eclipse egit</name>
-			<url>https://repo.eclipse.org/content/repositories/egit-releases/</url>
-		</pluginRepository>
-	</pluginRepositories>
+	
 </project>
