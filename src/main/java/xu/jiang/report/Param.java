@@ -32,18 +32,18 @@ public class Param {
 
 	}
 
-	/**
-	 * @deprecated
-	 * @author: jx  
-	 * @Title:  Param   
-	 * @Description:    TODO(这里用一句话描述这个方法的作用)   
-	 * @param:  @param modelFileName  
-	 * @throws
-	 */
-	public Param(String modelFileName) {
-		this.modelFileName = modelFileName;
-		init();
-	}
+//	/**
+//	 * @deprecated
+//	 * @author: jx  
+//	 * @Title:  Param   
+//	 * @Description:    TODO(这里用一句话描述这个方法的作用)   
+//	 * @param:  @param modelFileName  
+//	 * @throws
+//	 */
+////	public Param(String modelFileName) {
+////		this.modelFileName = modelFileName;
+////		init();
+////	}
 	
 	public Param(File templet) {
 		this.templet = templet;
