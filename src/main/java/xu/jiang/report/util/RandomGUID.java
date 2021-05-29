@@ -1,4 +1,4 @@
-package xu.jiang.report.v2.tool;
+package xu.jiang.report.util;
 
 /**
  * @author Administrator

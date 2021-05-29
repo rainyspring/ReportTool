@@ -1,4 +1,4 @@
-package xu.jiang.report.v2.tool;
+package xu.jiang.report.util;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -18,7 +18,7 @@ import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.lang3.StringUtils;
 
-import xu.jiang.report.v2.tool.file.FileUtil;
+import xu.jiang.report.util.file.FileUtil;
 
 public class ZipUtil {
 

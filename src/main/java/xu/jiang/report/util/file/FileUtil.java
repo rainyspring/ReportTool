@@ -1,4 +1,4 @@
-package xu.jiang.report.v2.tool.file;
+package xu.jiang.report.util.file;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -29,8 +29,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import xu.jiang.report.util.PathUtil;
 import xu.jiang.report.v2.bean.KeyValue;
-import xu.jiang.report.v2.tool.PathUtil;
 
 /**
  * 文件帮助类 针对常用的文件操作以下参考类均有提供： 参考1：org.apache.commons.io.FileUtils 删除文件、递归删除文件目录

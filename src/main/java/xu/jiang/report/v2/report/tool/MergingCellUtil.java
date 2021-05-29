@@ -13,8 +13,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 
+import xu.jiang.report.util.BooleanMsg;
 import xu.jiang.report.v2.report.bean.RangeCell;
-import xu.jiang.report.v2.tool.BooleanMsg;
 
 /**
  * 合并单元格处理类
