@@ -1,4 +1,4 @@
-package xu.jiang.report.v2.bean;
+package xu.jiang.report.v2.report.bean;
 /**
  * 符合Key-value结构的实体
  * @see

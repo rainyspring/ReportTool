@@ -1,4 +1,4 @@
-package xu.jiang.report.v2.report.tool;
+package xu.jiang.report.util.report;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -12,8 +12,9 @@ import org.hibernate.Session;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 
 import xu.jiang.report.Param;
+import xu.jiang.report.R;
+import xu.jiang.report.dealer.ReportDealer;
 import xu.jiang.report.util.file.FileUtil;
-import xu.jiang.report.v2.report.dealer.ReportDealer;
 
 /**
  * 报表专用对外辅助类

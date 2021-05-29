@@ -1,4 +1,4 @@
-package xu.jiang.report.v2.report.tool;
+package xu.jiang.report.util.report;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 
 import xu.jiang.report.Param;
+import xu.jiang.report.R;
 
 /**
  * 报表中关于正则的帮助类

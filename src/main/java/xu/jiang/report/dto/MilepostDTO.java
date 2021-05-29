@@ -1,4 +1,4 @@
-package xu.jiang.report.v2.report.dto;
+package xu.jiang.report.dto;
 /**
  * 里程碑的传输实体
  * @see

@@ -1,4 +1,4 @@
-package xu.jiang.report.v2.report.tool;
+package xu.jiang.report.util.report;
 
 import org.apache.commons.lang3.StringUtils;
 

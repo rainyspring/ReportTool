@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import xu.jiang.report.v2.report.tool.R;
-import xu.jiang.report.v2.report.tool.RegexUtil;
+import xu.jiang.report.R;
+import xu.jiang.report.util.report.RegexUtil;
 
 /**
  * 

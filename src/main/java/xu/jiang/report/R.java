@@ -1,4 +1,4 @@
-package xu.jiang.report.v2.report.tool;
+package xu.jiang.report;
 
 /**
  * 正则中的常用静态变量

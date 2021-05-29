@@ -1,8 +1,8 @@
-package xu.jiang.report.v2.report.dto;
+package xu.jiang.report.dto;
 
 import java.util.List;
 
-import xu.jiang.report.v2.bean.KeyValue;
+import xu.jiang.report.v2.report.bean.KeyValue;
 
 public class LayerDTO {
 
