@@ -72,7 +72,6 @@ public class ReportDealer {
 	 * 报表输出路径
 	 */
 	private Path outDir = null;
-	private boolean isMilepost = false;
 
 	/**
 	 * 模板的sheet名称
@@ -100,21 +99,19 @@ public class ReportDealer {
 	public File start() throws Exception {
 		try {
 
+			this.before();
+
 			// 读取Excel模板
 			this.workbook = DomPOI.readExcel(this.param.templet);
 
 			// 默认获取第一个sheet作为模板sheet,并保存到公共变量param里
 			this.param.mainSheet = workbook.getSheetAt(0);
-			/*
-			 * 将模板固化
-			 */
+			
+			// 重绘模板，将模板固化
 			new Painter(this.param.uiParams, this.param.mainSheet).draw();
 
-			// 初始化里程碑信息
-			if (isMilepost) {
-
-				this.initMilepostInfo();
-			}
+		
+			
 			/*
 			 * 解析模板参数
 			 */
@@ -157,20 +154,15 @@ public class ReportDealer {
 	}
 
 	/**
-	 * 将里程碑的id和标题都初始化到公共参数param中 因为这是固定值，提前加载好后方便以后读取， 这样就不必要传session了
+	 * 生成报表之前要做的事情
+	 * 如果有需要，你可以重新该函数
+	 * @return
 	 */
-	private void initMilepostInfo() {
-		String hql_ps_yz = "select new com.fulong.utils.report.dto.MilepostDTO(m.milepostID,m.milepostName)  from Milepost m where  m.milepostClass.milepostClassID='PipeSection_DL' order by m.milepostOrderIndex asc ";
-		String hql_ps_xc = "select new com.fulong.utils.report.dto.MilepostDTO(m.milepostID,m.milepostName) from Milepost m where  m.milepostClass.milepostClassID='PipeInstall_DL' order by m.milepostOrderIndex asc ";
-		String hql_ps = "select new com.fulong.utils.report.dto.MilepostDTO(m.milepostID,m.milepostName) from Milepost m where  m.milepostClass.milepostClassID='PipeSection_DL' or  m.milepostClass.milepostClassID='PipeInstall_DL'  order by m.milepostOrderIndex asc ";
-		String hql_wl = "select new com.fulong.utils.report.dto.MilepostDTO(m.milepostID,m.milepostName) from Milepost m where  m.milepostClass.milepostClassID='WeldLine_DL' order by m.milepostOrderIndex asc";
-
-		this.param.milepost_ps_yz = session.createQuery(hql_ps_yz).list();
-		this.param.milepost_ps_xc = session.createQuery(hql_ps_xc).list();
-		this.param.milepost_ps = session.createQuery(hql_ps).list();
-		this.param.milepost_wl = session.createQuery(hql_wl).list();
-
+	public ReportDealer before() {
+		
+		return this ;
 	}
+
 
 	/**
 	 * 模板绘制器(主要解决ui.layer重绘模板的需求) 在读取模板内容之前，先绘制模板内容
@@ -926,15 +918,7 @@ public class ReportDealer {
 		return this;
 	}
 
-	/**
-	 * 指定输出路径
-	 * 
-	 * @param path
-	 */
-	public ReportDealer setMilepost(boolean isMilepost) {
-		this.isMilepost = isMilepost;
-		return this;
-	}
+	
 
 	/**
 	 * 获取order By的sql属性

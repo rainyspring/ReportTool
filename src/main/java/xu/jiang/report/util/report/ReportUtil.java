@@ -93,7 +93,7 @@ public class ReportUtil {
 				//使用临时目录
 				dealer.setOutDir(FileUtil.getOrCreateTempPath());
 			}
-			outf = dealer.setMilepost(false).start();
+			outf = dealer.start();
 
 			session.close();
 		} catch (Exception e) {

@@ -49,7 +49,7 @@ public class A {
 
 			ReportDealer dealer = new ReportDealer(session, param);
 
-			File outf = dealer.setMilepost(false).start();
+			File outf = dealer.start();
 			session.close();
 			return outf;
 		} catch (Exception e) {
