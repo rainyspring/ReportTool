@@ -13,7 +13,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.fulong.utils.v2.report.Param;
+import xu.jiang.report.Param;
+import xu.jiang.report.v2.report.dealer.ReportDealer;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
